@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Chat Room</title>
+        <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    </head>
+    <body>
+        <h1>Welcome to the Chat Room</h1>
+        <form>
+            <p>Type in a message!</p>
+            <input type = "text" id = "text">
+            <button type = "button" id = "button">Send Message</button>
+        </form>
+        <div id = "messages"></div>
+    </body>
+    <footer>
+        <script>
+            const socket = io();
+            
+            const textBox = document.getElementById("text");
+            const button = document.getElementById("button");
+            button.addEventListener("click", () => {
+                console.log("button clicked");
+                socket.emit('blake_message', textBox.value);
+            })
+
+            socket.on('different_name', (msg) => {
+                const messages = document.getElementById('messages');
+                const newMessage = document.createElement("p");
+                newMessage.textContent = msg;
+                messages.appendChild(newMessage);
+            })
+
+        </script>
+    </footer>
+</html>
