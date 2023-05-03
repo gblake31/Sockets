@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/gblake31/Sockets/issues"
   },
-  "homepage": "https://github.com/gblake31/Sockets#readme"
+  "homepage": "https://github.com/gblake31/Sockets#readme",
+  "dependencies": {
+    "express":"*",
+    "socket.io": "*"
+ }
 }
