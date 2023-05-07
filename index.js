@@ -8,26 +8,36 @@ const io = new Server(server);
 
 const port = process.env.PORT || 5000;
 
+app.use("/images", express.static(__dirname + '/images'));
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/chat.html');
+  res.sendFile(__dirname + '/login.html');
 });
 
-app.get('/hello', (req, res) => {
-  res.send("<h1>Hello World!</h1>");
+app.get('/login.css', (req, res) => {
+  res.sendFile(__dirname + "/login.css");
+})
+
+app.get('/chat', (req, res) => {
+  res.sendFile(__dirname + '/chat.html');
 })
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
+  console.log(socket.id);
+
+  socket.on('register', (name) => {
+    socket.data.nickname = name;
+    io.emit('message', socket.data.nickname + " joined the chat.");
+  })
+  // Detecting emmisions from an arbitrary socket.
   socket.on('disconnect', () => {
-    console.log('user disconnected');
+    io.emit('message', socket.data.nickname + " disconnected.");
   });
   socket.on('blake_message', (msg) => {
-    console.log('message: ' + msg);
-    io.emit('different_name', msg);
+    io.emit('message', socket.data.nickname + ": " + msg);
   });
 });
 
 server.listen(port, () => {
-  console.log('listening on *:' + port);
+  console.log('listening on localhost:' + port);
 });

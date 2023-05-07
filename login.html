@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <title>Socket Poker</title>
+        <link rel = "preconnect" href = "https://fonts.googleapis.com">
+        <link rel = "preconnect" href = "https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+
+        <link rel = "stylesheet" href = "/login.css">
+    </head>
+    <body>
+        <h1>Welcome to Socket Poker</h1>
+        <form>
+            <input id = "nickname" type = "text" placeholder= "Nickname">
+            <input id = "begin" type = "submit" value = "Join Game">
+        </form>
+    </body>
+    <footer>
+        <p>Created by Blake Gassman - V0.0.1</p>
+        <script>
+            const form = document.getElementsByTagName("form")[0];
+            form.addEventListener("submit", (event) => {
+                event.preventDefault();
+                console.log("clicked");
+                const nickname = document.getElementById("nickname").value;
+                localStorage.setItem("nickname", nickname);
+                window.location.href = "/chat";
+            });
+        </script>
+    </footer>
+</html>
