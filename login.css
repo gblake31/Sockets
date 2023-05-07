@@ -4,8 +4,7 @@ h1 {
     font-size: 80px;
     text-align: center;
     font-weight: bolder;
-    background-color: white;
-    opacity: 50%;
+    background-color: rgba(255, 255, 255, .4);
     display: inline-block;
 
     padding: 20px 100px;
@@ -39,8 +38,10 @@ body {
 
 p {
     font-family: 'Rubik', sans-serif;
+    background-color: rgba(255, 255, 255, .3);
+    padding: 10px;
     position: absolute;
-    bottom: 25px; 
+    bottom: 10px; 
     font-size: 32px;
     right: 25px;
 }
