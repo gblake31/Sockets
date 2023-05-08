@@ -25,11 +25,13 @@ app.get('/chat', (req, res) => {
   res.sendFile(__dirname + '/chat.html');
 })
 
-const deck = require('./deck.js');
+const deckModule = require('./deck.js');
 
 app.get('/drawCard', (req, res) => {
-  let randomCard = deck.drawRandomCard();
-  res.send("<img src =" + randomCard.imgStr + ">");
+  let d = new deckModule.Deck(true);
+  console.log(d);
+  let card = d.drawCard();
+  res.send("<img src =" + card.imgStr + ">");
 })
 
 io.on('connection', (socket) => {
