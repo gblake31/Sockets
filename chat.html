@@ -6,6 +6,7 @@
     </head>
     <body>
         <h1>Welcome to the Chat Room</h1>
+        <h3>Number of Users: <span id = "numUsers">1</span></h3>
         <form>
             <p>Type in a message!</p>
             <input type = "text" id = "text">
@@ -31,6 +32,11 @@
                 const newMessage = document.createElement("p");
                 newMessage.textContent = msg;
                 messages.appendChild(newMessage);
+            })
+
+            socket.on('updateNumUsers', (x) => {
+                const numUsers = document.getElementById("numUsers");
+                numUsers.textContent = x;
             })
 
         </script>
