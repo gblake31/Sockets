@@ -47,4 +47,4 @@ function drawRandomCard() {
     return card;
 }
 
-export {Card, drawRandomCard};
+module.exports = {Card, drawRandomCard};
