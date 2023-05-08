@@ -9,7 +9,8 @@ const io = new Server(server);
 
 const port = process.env.PORT || 5000;
 
-let numUsers = 0;
+let users = [];
+let hands = [];
 
 app.use("/images", express.static(__dirname + '/images'));
 
@@ -20,9 +21,16 @@ app.get('/', (req, res) => {
 app.get('/login.css', (req, res) => {
   res.sendFile(__dirname + "/login.css");
 })
+app.get('/game.css', (req, res) => {
+  res.sendFile(__dirname + "/game.css");
+})
 
 app.get('/chat', (req, res) => {
   res.sendFile(__dirname + '/chat.html');
+})
+
+app.get('/game', (req, res) => {
+  res.sendFile(__dirname + '/game.html');
 })
 
 const deckModule = require('./deck.js');
@@ -34,10 +42,12 @@ app.get('/drawCard', (req, res) => {
   res.send("<img src =" + card.imgStr + ">");
 })
 
+// Socket IO Logic
+
 io.on('connection', (socket) => {
   console.log(socket.id);
-  numUsers++;
-  io.emit('updateNumUsers', numUsers);
+  users.push(socket);
+  io.emit('updateNumUsers', users.length);
 
   socket.on('register', (name) => {
     socket.data.nickname = name;
@@ -45,13 +55,26 @@ io.on('connection', (socket) => {
   })
   // Detecting emmisions from an arbitrary socket.
   socket.on('disconnect', () => {
-    numUsers--;
+    users = users.filter(x => x != socket);
     io.emit('message', socket.data.nickname + " disconnected.");
-    io.emit('updateNumUsers', numUsers);
+    io.emit('updateNumUsers', users.length);
   });
   socket.on('blake_message', (msg) => {
     io.emit('message', socket.data.nickname + ": " + msg);
   });
+
+
+  // Game actions
+  socket.on('start', () => {
+    let d = new deckModule.Deck(true);
+    for (let i = 0; i < users.length; i++) {
+      hands[i] = [d.drawCard(), d.drawCard()];
+    }
+
+    for (let i = 0; i < users.length; i++) {
+      users[i].emit('deal', hands[i]);
+    }
+  })
 });
 
 server.listen(port, () => {

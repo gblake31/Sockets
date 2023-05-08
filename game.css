@@ -1,0 +1,29 @@
+#bottom {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    bottom: 50px;
+    height: 30%;
+}
+
+#hand {
+    display: flex;
+}
+
+#hand1, #hand2 {
+    margin: 10px;
+}
+
+.action {
+    height: 100px;
+    width: 200px;
+    font-size: larger;
+    align-self: center;
+    margin: 25px;
+}
+
+#chat {
+    position: absolute;
+    right: 25px;
+}
+

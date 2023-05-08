@@ -1,10 +1,10 @@
-// constuctor function for the card object.
-// we are ordering cards like so:
-// 2 of spades all the way to ace of spades,
-// then 2
 
+// Constructor for the Deck Object.
+// A deck contains 52 cards, which can be ordered or shuffled
 function Deck(shuffled) {
     this.shuffle = function() {
+
+        // Simulate shuffling by taking two random indices and swapping their contents.
         for (let s = 0; s < 500; s++) {
             let i = Math.floor(Math.random() * 52);
             let j = Math.floor(Math.random() * 52);
@@ -15,6 +15,7 @@ function Deck(shuffled) {
         }
     }
 
+    // Draw from the top of the stack, and decrement the stack pointer.
     this.drawCard = function() {
         this.numCards--;
         let card = this.cards[this.numCards];
@@ -27,12 +28,12 @@ function Deck(shuffled) {
         this.cards.push(new Card(i));
     }
 
-    // Simulate shuffling by taking two random indices and swapping their contents.
     if (shuffled) {
         this.shuffle();
     }
 }
 
+// Constructor Function for the Card Object.
 // suit order is "hearts spades diamonds clubs"
 function Card (id) {
     this.id = id;
@@ -42,7 +43,8 @@ function Card (id) {
     this.suitStr = findSuitString(this.suit);
     this.imgStr = "/images/" + this.rankStr + "_of_" + this.suitStr + ".png";
 }
-  
+
+
 function findRankString(rankNum) {
     if (rankNum == 11) {
         return "jack";

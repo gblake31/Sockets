@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Socket Poker</title>
+        <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+        <link rel = "stylesheet" href = "/game.css">
+    </head>
+    <body>
+        <div id = "top">
+            <button onClick = "onStart();">Start Game</button>
+            <div id = 'chat'>
+                <h3>Number of Users: <span id = "numUsers">1</span></h3>
+                <form id = 'chatForm'>
+                    <p>Type in a message!</p>
+                    <input type = "text" id = "text">
+                    <input type = "submit" id = "button" value = "Send Message">
+                </form>
+                <div id = "messages"></div>
+            </div>
+        </div>
+        <div id = "middle">
+
+        </div>
+        <div id = "bottom">
+            <div id = 'hand'>
+                <img id = "hand1">
+                <img id = "hand2">
+            </div>
+            <button class = 'action'>Fold</button>
+            <button class = 'action'>Check/Call</button>
+            <button class = 'action'>Raise</button>
+        </div>
+    </body>
+    <footer>
+        <script>
+            let form = document.getElementById("chatForm");
+            form.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const textBox = document.getElementById("text");
+                socket.emit('blake_message', textBox.value);
+
+            })
+            function onStart() {
+                socket.emit('start');
+            }
+
+            const socket = io();
+            socket.emit('register', localStorage.getItem('nickname'));
+
+            let hand1 = document.getElementById("hand1");
+            let hand2 = document.getElementById("hand2");
+            socket.on('deal', (hand) => {
+                const [card1, card2] = hand;
+                hand1.setAttribute('src', card1.imgStr);
+                hand2.setAttribute('src', card2.imgStr);
+            })
+
+            socket.on('message', (msg) => {
+                const messages = document.getElementById('messages');
+                const newMessage = document.createElement("p");
+                newMessage.textContent = msg;
+                messages.appendChild(newMessage);
+            })
+
+            socket.on('updateNumUsers', (x) => {
+                const numUsers = document.getElementById("numUsers");
+                numUsers.textContent = x;
+            })
+        </script>
+    </footer>
+</html>
