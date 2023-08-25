@@ -10,6 +10,15 @@
     display: flex;
 }
 
+#middle {
+    display: flex;
+    height: 300px;
+}
+
+#middle > * {
+    margin: 20px;
+}
+
 #hand1, #hand2 {
     margin: 10px;
 }
@@ -25,5 +34,9 @@
 #chat {
     position: absolute;
     right: 25px;
+}
+
+.win {
+    background-color: green;
 }
 
