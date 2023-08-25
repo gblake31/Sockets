@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Socket Poker</title>
-        <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+        <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"></script>
         <link rel = "stylesheet" href = "/game.css">
     </head>
     <body>
@@ -39,8 +39,8 @@
         </div>
     </body>
     <footer>
-        <script type>
-            /*const socket = io();
+        <script>
+            const socket = io();
             socket.emit('register', localStorage.getItem('nickname'));
 
             let yourTurn = false;
@@ -82,7 +82,7 @@
 
             socket.on('updateNumUsers', (x) => {
                 const numUsers = document.getElementById('numUsers');
-                numUsers.textContent = x;
+                numUsers.textContent = "" + x;
             });
 
             socket.on('updateTurn', (x) => {
@@ -117,33 +117,33 @@
 
             });
 
-            function onStart() {
+            const onStart = () => {
                 socket.emit('start');
-            }
+            };
 
-            function fold() {
+            const fold = () => {
                 if (yourTurn) {
                     yourTurn = false;
                     console.log("FOLD");
                     socket.emit('fold');
                 }
-            }
+            };
 
-            function call() {
+            const call = () => {
                 if (yourTurn) {
                     yourTurn = false;
                     console.log("CALL");
                     socket.emit('call');
                 }
-            }
+            };
 
-            function raise() {
+            const raise = () => {
                 if (yourTurn) {
                     yourTurn = false;
                     socket.emit('raise');
                 }
-            }
-*/
+            };
+
         </script>
     </footer>
 </html>
